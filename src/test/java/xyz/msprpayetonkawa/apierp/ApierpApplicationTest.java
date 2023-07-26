@@ -1,13 +1,12 @@
 package xyz.msprpayetonkawa.apierp;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApierpApplicationTests {
-
+public class ApierpApplicationTest {
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }
