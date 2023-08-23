@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.product;
+package xyz.msprpayetonkawa.apirevendeur.product;
 
 import jakarta.transaction.Transactional;
 import lombok.Data;

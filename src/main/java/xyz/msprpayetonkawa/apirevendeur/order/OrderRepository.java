@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.order;
+package xyz.msprpayetonkawa.apirevendeur.order;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

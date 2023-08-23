@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.client;
+package xyz.msprpayetonkawa.apirevendeur.client;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

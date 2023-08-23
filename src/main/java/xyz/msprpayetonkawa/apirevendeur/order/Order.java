@@ -1,11 +1,11 @@
-package xyz.msprpayetonkawa.apierp.order;
+package xyz.msprpayetonkawa.apirevendeur.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import xyz.msprpayetonkawa.apierp.client.Customer;
-import xyz.msprpayetonkawa.apierp.relations.OrderProduct;
+import xyz.msprpayetonkawa.apirevendeur.client.Customer;
+import xyz.msprpayetonkawa.apirevendeur.relations.OrderProduct;
 
 import java.time.LocalDateTime;
 import java.util.List;

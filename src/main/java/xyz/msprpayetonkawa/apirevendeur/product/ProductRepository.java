@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.product;
+package xyz.msprpayetonkawa.apirevendeur.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

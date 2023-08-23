@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.relations;
+package xyz.msprpayetonkawa.apirevendeur.relations;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

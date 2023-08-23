@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.client;
+package xyz.msprpayetonkawa.apirevendeur.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

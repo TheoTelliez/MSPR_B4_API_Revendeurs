@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.product;
+package xyz.msprpayetonkawa.apirevendeur.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

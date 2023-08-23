@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.tools;
+package xyz.msprpayetonkawa.apirevendeur.tools;
 
 import org.mockito.Mockito;
 import org.springframework.aop.framework.Advised;

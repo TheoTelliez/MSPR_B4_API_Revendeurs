@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.product;
+package xyz.msprpayetonkawa.apirevendeur.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

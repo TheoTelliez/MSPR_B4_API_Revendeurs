@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>xyz.msprpayetonkawa</groupId>
-	<artifactId>apierp</artifactId>
+	<artifactId>apirevendeur</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>apierp</name>
 	<description>Projet MSPR API ERP</description>

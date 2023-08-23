@@ -1,13 +1,13 @@
-package xyz.msprpayetonkawa.apierp.order;
+package xyz.msprpayetonkawa.apirevendeur.order;
 
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.msprpayetonkawa.apierp.client.CustomerRepository;
-import xyz.msprpayetonkawa.apierp.product.Product;
-import xyz.msprpayetonkawa.apierp.product.ProductRepository;
-import xyz.msprpayetonkawa.apierp.relations.OrderProduct;
+import xyz.msprpayetonkawa.apirevendeur.client.CustomerRepository;
+import xyz.msprpayetonkawa.apirevendeur.product.Product;
+import xyz.msprpayetonkawa.apirevendeur.product.ProductRepository;
+import xyz.msprpayetonkawa.apirevendeur.relations.OrderProduct;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp;
+package xyz.msprpayetonkawa.apirevendeur;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

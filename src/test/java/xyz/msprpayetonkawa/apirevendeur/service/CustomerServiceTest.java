@@ -1,4 +1,4 @@
-package xyz.msprpayetonkawa.apierp.service;
+package xyz.msprpayetonkawa.apirevendeur.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,9 +9,9 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.msprpayetonkawa.apierp.client.Customer;
-import xyz.msprpayetonkawa.apierp.client.CustomerRepository;
-import xyz.msprpayetonkawa.apierp.client.CustomerService;
+import xyz.msprpayetonkawa.apirevendeur.client.Customer;
+import xyz.msprpayetonkawa.apirevendeur.client.CustomerRepository;
+import xyz.msprpayetonkawa.apirevendeur.client.CustomerService;
 
 import java.util.Arrays;
 import java.util.List;
