@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import xyz.msprpayetonkawa.apierp.client.Customer;
-import xyz.msprpayetonkawa.apierp.product.Product;
 import xyz.msprpayetonkawa.apierp.relations.OrderProduct;
 
 import java.time.LocalDateTime;

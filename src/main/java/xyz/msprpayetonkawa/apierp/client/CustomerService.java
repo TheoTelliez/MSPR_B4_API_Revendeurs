@@ -1,12 +1,10 @@
 package xyz.msprpayetonkawa.apierp.client;
 
 import jakarta.transaction.Transactional;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

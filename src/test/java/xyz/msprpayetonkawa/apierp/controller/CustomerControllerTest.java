@@ -1,7 +1,6 @@
 package xyz.msprpayetonkawa.apierp.controller;
 
 import io.restassured.response.Response;
-import mockit.Mocked;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ public class CustomerControllerTest {
 
     @Autowired
     CustomerController customerController;
-
-    @Mocked
-    CustomerService customerService;
 
     @Test
     public void testGetCustomers() {
