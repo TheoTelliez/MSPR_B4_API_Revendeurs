@@ -23,8 +23,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void deleteProducts(final Long id) {
-        productRepository.deleteById(id);
+    public void deleteProduct(final String uid) {
+        Product deletedProduct = productRepository.findByUid(uid);
+        productRepository.delete(deletedProduct);
     }
 
     @Transactional(rollbackOn = Exception.class)
