@@ -23,8 +23,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void deleteProducts(final Long id) {
-        productRepository.deleteById(id);
+    public void deleteProduct(final String uid) {
+        productRepository.deleteByUid(uid);
     }
 
     @Transactional(rollbackOn = Exception.class)

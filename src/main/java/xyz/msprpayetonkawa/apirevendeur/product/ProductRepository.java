@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     Product findByUid(String id);
 
+    Product deleteByUid(String id);
+
 }
