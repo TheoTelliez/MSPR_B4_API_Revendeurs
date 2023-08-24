@@ -2,6 +2,7 @@ package xyz.msprpayetonkawa.apirevendeur.order;
 
 import jakarta.transaction.Transactional;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.msprpayetonkawa.apirevendeur.client.CustomerRepository;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@RequiredArgsConstructor
 @Service
 public class OrderService {
 

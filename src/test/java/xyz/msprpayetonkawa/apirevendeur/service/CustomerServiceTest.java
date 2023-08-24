@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.msprpayetonkawa.apirevendeur.client.Customer;
 import xyz.msprpayetonkawa.apirevendeur.client.CustomerRepository;
 import xyz.msprpayetonkawa.apirevendeur.client.CustomerService;
+import xyz.msprpayetonkawa.apirevendeur.product.Product;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +40,22 @@ public class CustomerServiceTest {
         Mockito.when(customerRepository.findAll()).thenReturn(customers);
         Mockito.when(customerRepository.findByUid("uid-key")).thenReturn(customer1);
         Mockito.when(customerRepository.findByUid("no-uid-key")).thenReturn(null);
+    }
+
+    @Test
+    public void testEqualsAndHash(){
+        Customer customer = new Customer(1L,"uid-key","Last Name","First Name","first.last@email.com","Company",true);
+        Customer customerCopy = new Customer(1L,"uid-key","Last Name","First Name","first.last@email.com","Company",true);
+        assertEquals(customer,customerCopy);
+        assertEquals(customer.hashCode(), customerCopy.hashCode());
+    }
+
+    @Test
+    public void testNotEqualsAndNotHash(){
+        Customer customer = new Customer(1L,"uid-key","Last Name","First Name","first.last@email.com","Company",true);
+        Customer otherCustomer = new Customer(2L,"other-uid-key","Other Last Name","Other First Name","otherfirst.otherlast@email.com","Other Company",false);
+        assertNotEquals(customer,otherCustomer);
+        assertNotEquals(customer.hashCode(), otherCustomer.hashCode());
     }
 
     @Test

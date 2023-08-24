@@ -48,6 +48,22 @@ public class ProductServiceTest {
     }
 
     @Test
+    public void testEqualsAndHash(){
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f,1);
+        Product productCopy = new Product(1L,"uid-key","Name","Description",11.11f,1);
+        assertEquals(product,productCopy);
+        assertEquals(product.hashCode(), productCopy.hashCode());
+    }
+
+    @Test
+    public void testNotEqualsAndNotHash(){
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f,1);
+        Product otherProduct = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,2);
+        assertNotEquals(product,otherProduct);
+        assertNotEquals(product.hashCode(), otherProduct.hashCode());
+    }
+
+    @Test
     public void testFindProductByUidThatExists(){
         String uid = "uid-key";
         Product result = productService.getProduct(uid);
@@ -71,5 +87,28 @@ public class ProductServiceTest {
 
         assertNotNull(result);
         assertEquals(product3,result);
+    }
+
+    @Test
+    public void testDeleteProduct(){
+
+        String uid = "uid-key-to-delete";
+
+        Product productToDelete = new Product(4L,uid,"Deleted","Deleted",99.99f,0);
+
+        Mockito.when(productRepository.findByUid(uid)).thenReturn(productToDelete);
+
+        Product resultExists = productService.getProduct(uid);
+
+        assertNotNull(resultExists);
+
+        productService.deleteProduct(uid);
+
+        Mockito.when(productRepository.findByUid(uid)).thenReturn(null);
+
+        Product resultNotExists = productService.getProduct(uid);
+
+        assertNull(resultNotExists);
+
     }
 }

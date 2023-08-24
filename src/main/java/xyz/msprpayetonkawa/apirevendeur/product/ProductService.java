@@ -2,13 +2,14 @@ package xyz.msprpayetonkawa.apirevendeur.product;
 
 import jakarta.transaction.Transactional;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@RequiredArgsConstructor
 @Service
 public class ProductService {
 
@@ -24,7 +25,8 @@ public class ProductService {
     }
 
     public void deleteProduct(final String uid) {
-        productRepository.deleteByUid(uid);
+        Product deletedProduct = productRepository.findByUid(uid);
+        productRepository.delete(deletedProduct);
     }
 
     @Transactional(rollbackOn = Exception.class)
