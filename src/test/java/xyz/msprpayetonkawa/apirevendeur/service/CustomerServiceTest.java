@@ -48,6 +48,7 @@ public class CustomerServiceTest {
         Customer customerCopy = new Customer(1L,"uid-key","Last Name","First Name","first.last@email.com","Company",true);
         assertEquals(customer,customerCopy);
         assertEquals(customer.hashCode(), customerCopy.hashCode());
+        assertEquals(customer.toString(), customerCopy.toString());
     }
 
     @Test
@@ -56,6 +57,7 @@ public class CustomerServiceTest {
         Customer otherCustomer = new Customer(2L,"other-uid-key","Other Last Name","Other First Name","otherfirst.otherlast@email.com","Other Company",false);
         assertNotEquals(customer,otherCustomer);
         assertNotEquals(customer.hashCode(), otherCustomer.hashCode());
+        assertNotEquals(customer.toString(), otherCustomer.toString());
     }
 
     @Test

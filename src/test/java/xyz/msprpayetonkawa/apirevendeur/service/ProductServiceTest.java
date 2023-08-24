@@ -26,25 +26,22 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
+    private final Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,1);
+    private final Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,2);
+    private final List<Product> products = Arrays.asList(product1, product2);
+
     @InjectMocks
     private ProductService productService;
 
     @Before
     public void setUp(){
-        Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,1);
-        Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,2);
-        List<Product> products = Arrays.asList(product1, product2);
-
-
-        Mockito.when(productRepository.findAll()).thenReturn(products);
-        Mockito.when(productRepository.findByUid("uid-key")).thenReturn(product1);
-        Mockito.when(productRepository.findByUid("no-uid-key")).thenReturn(null);
     }
 
     @Test
     public void testFindAllProducts(){
+        Mockito.when(productRepository.findAll()).thenReturn(products);
         List<Product> result = productService.getProducts();
-        assertEquals(2,result.size());
+        assertEquals(products,result);
     }
 
     @Test
@@ -53,6 +50,7 @@ public class ProductServiceTest {
         Product productCopy = new Product(1L,"uid-key","Name","Description",11.11f,1);
         assertEquals(product,productCopy);
         assertEquals(product.hashCode(), productCopy.hashCode());
+        assertEquals(product.toString(), productCopy.toString());
     }
 
     @Test
@@ -61,18 +59,21 @@ public class ProductServiceTest {
         Product otherProduct = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,2);
         assertNotEquals(product,otherProduct);
         assertNotEquals(product.hashCode(), otherProduct.hashCode());
+        assertNotEquals(product.toString(), otherProduct.toString());
     }
 
     @Test
     public void testFindProductByUidThatExists(){
         String uid = "uid-key";
+        Mockito.when(productRepository.findByUid(uid)).thenReturn(product1);
         Product result = productService.getProduct(uid);
-        assertEquals(1L,result.getId());
+        assertEquals(product1,result);
     }
 
     @Test
     public void testFindProductByUidThatDoesNotExists(){
         String uid = "no-uid-key";
+        Mockito.when(productRepository.findByUid(uid)).thenReturn(null);
         Product result = productService.getProduct(uid);
         assertNull(result);
     }
