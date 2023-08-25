@@ -15,6 +15,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 
@@ -26,19 +29,18 @@ public class GenerateQRCode {
 
     public void createQRCode(String token, String username, String email) throws WriterException, IOException, MessagingException {
         String qrcodeFolderPath = "src/main/resources/qrcodes/";
-        String qrCodeText = token;
         String filePath = qrcodeFolderPath + File.separator + username +".png";
         int size = 800;
         String fileType = "png";
         File qrFile = new File(filePath);
         if (qrFile.exists()) {
-            qrFile.delete();
+            Files.delete(Path.of(filePath));
         }
         // Create the ByteMatrix for the QR-Code that encodes the given String
-        Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
+        HashMap<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix byteMatrix = qrCodeWriter.encode(qrCodeText, BarcodeFormat.QR_CODE, size, size, hintMap);
+        BitMatrix byteMatrix = qrCodeWriter.encode(token, BarcodeFormat.QR_CODE, size, size, hintMap);
         // Make the BufferedImage that are to hold the QRCode
         int matrixWidth = byteMatrix.getWidth();
         BufferedImage image = new BufferedImage(matrixWidth, matrixWidth, BufferedImage.TYPE_INT_RGB);

@@ -20,7 +20,7 @@ import xyz.msprpayetonkawa.apirevendeur.security.jwt.JwtUtils;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.LoginRequest;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.SignupRequest;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.MessageResponse;
-import xyz.msprpayetonkawa.apirevendeur.security.payload.response.Token;
+import xyz.msprpayetonkawa.apirevendeur.security.payload.response.AuthToken;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 
 import javax.mail.MessagingException;
@@ -50,7 +50,7 @@ public class AuthController {
     private String defaultPassword;
 
     @PostMapping("/signin")
-    public ResponseEntity<Token> authenticateUser(@RequestBody LoginRequest loginRequest) throws IOException, WriterException, MessagingException {
+    public ResponseEntity<AuthToken> authenticateUser(@RequestBody LoginRequest loginRequest) throws IOException, WriterException, MessagingException {
         loginRequest.setPassword(defaultPassword);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -63,7 +63,7 @@ public class AuthController {
 
         generateQRCode.createQRCode(jwtToken, userDetails.getUsername(), userDetails.getEmail());
 
-        return ResponseEntity.ok(new Token(jwtToken));
+        return ResponseEntity.ok(new AuthToken(jwtToken));
     }
 
     @PostMapping("/signup")
