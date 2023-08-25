@@ -52,8 +52,9 @@ public class OrderTest {
 
     @Test
     public void testEqualsAndHash(){
-        Order order = new Order(1L,"order-uid-key", LocalDateTime.now(),orderProductList1,customer1);
-        Order orderCopy = new Order(1L,"order-uid-key",LocalDateTime.now(),orderProductList1,customer1);
+        LocalDateTime date = LocalDateTime.now();
+        Order order = new Order(1L,"order-uid-key", date,orderProductList1,customer1);
+        Order orderCopy = new Order(1L,"order-uid-key", date,orderProductList1,customer1);
         assertEquals(order,orderCopy);
         assertEquals(order.hashCode(), orderCopy.hashCode());
         assertEquals(order.toString(), orderCopy.toString());

@@ -19,11 +19,8 @@ import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerRepository;
 import xyz.msprpayetonkawa.apirevendeur.security.jwt.JwtUtils;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.LoginRequest;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.SignupRequest;
-import xyz.msprpayetonkawa.apirevendeur.security.payload.response.MessageResponse;
-import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
-
-import java.util.UUID;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.AuthToken;
+import xyz.msprpayetonkawa.apirevendeur.security.payload.response.MessageResponse;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 
 import javax.mail.MessagingException;

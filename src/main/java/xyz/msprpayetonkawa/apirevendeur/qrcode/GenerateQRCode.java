@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
-import javax.mail.MessagingException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 
 @Component

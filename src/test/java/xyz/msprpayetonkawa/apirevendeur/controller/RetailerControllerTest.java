@@ -3,20 +3,16 @@ package xyz.msprpayetonkawa.apirevendeur.controller;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.msprpayetonkawa.apirevendeur.WebSecurityConfig;
-import xyz.msprpayetonkawa.apirevendeur.product.Product;
-import xyz.msprpayetonkawa.apirevendeur.product.ProductController;
-import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
 import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerController;
 import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerService;
-import xyz.msprpayetonkawa.apirevendeur.service.RetailerServiceTest;
 import xyz.msprpayetonkawa.apirevendeur.tools.SpringBeanMockUtil;
 
 import java.util.List;
@@ -28,6 +24,7 @@ import static org.mockito.Mockito.doReturn;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @ActiveProfiles("test")
+@DirtiesContext
 @Import(WebSecurityConfig.class)
 public class RetailerControllerTest {
     @Autowired
