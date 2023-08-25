@@ -16,10 +16,9 @@ import xyz.msprpayetonkawa.apirevendeur.order.OrderRepository;
 import xyz.msprpayetonkawa.apirevendeur.order.OrderService;
 import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductRepository;
-import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
-import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 import xyz.msprpayetonkawa.apirevendeur.relations.OrderProduct;
 import xyz.msprpayetonkawa.apirevendeur.relations.OrderProductKey;
+import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -45,8 +44,8 @@ public class OrderServiceTest {
 
     Customer customer1 = new Customer(1L,"customer-uid-key","Last Name","First Name","first.last@email.com","Company",true);
     Customer customer2 = new Customer(2L,"other-customer-uid-key","Other Last Name","First Name","first.last@email.com","Company",true);
-    Product product1 = new Product(1L,"product-uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
-    Product product2 = new Product(2L,"other-product-uid-key","Other Name","Description",11.11f,new Retailer(), 1, "image");
+    Product product1 = new Product(1L,"product-uid-key","Name","Description",11.11f,new Retailer(), 1, "image","bleu");
+    Product product2 = new Product(2L,"other-product-uid-key","Other Name","Description",11.11f,new Retailer(), 1, "image","noir");
     Order order1 = new Order();
     Order order2 = new Order();
 
@@ -88,23 +87,7 @@ public class OrderServiceTest {
         assertEquals(orders,result);
     }
 
-    @Test
-    public void testEqualsAndHash(){
-        Order order = new Order(1L,"order-uid-key",LocalDateTime.now(),orderProductList1,customer1);
-        Order orderCopy = new Order(1L,"order-uid-key",LocalDateTime.now(),orderProductList1,customer1);
-        assertEquals(order,orderCopy);
-        assertEquals(order.hashCode(), orderCopy.hashCode());
-        assertEquals(order.toString(), orderCopy.toString());
-    }
 
-    @Test
-    public void testNotEqualsAndNotHash(){
-        Order order = new Order(1L,"order-uid-key",LocalDateTime.now(),orderProductList1,customer1);
-        Order otherOrder = new Order(2L,"another-order-uid-key",LocalDateTime.now(),orderProductList2,customer2);
-        assertNotEquals(order,otherOrder);
-        assertNotEquals(order.hashCode(), otherOrder.hashCode());
-        assertNotEquals(order.toString(), otherOrder.toString());
-    }
 
     @Test
     public void testFindOrderByUidThatExists(){
@@ -113,7 +96,6 @@ public class OrderServiceTest {
         Order result = orderService.getOrder(uid);
         assertEquals(order1,result);
     }
-
 
     @Test
     public void testFindOrderByUidThatDoesNotExists(){

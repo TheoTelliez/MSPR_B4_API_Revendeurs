@@ -20,7 +20,7 @@ import xyz.msprpayetonkawa.apirevendeur.tools.SpringBeanMockUtil;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext
@@ -50,7 +50,7 @@ public class ProductControllerTest {
 
     @Test
     public void testAddProduct() {
-        Product product = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image","bleu");
         ProductService productServiceMock = SpringBeanMockUtil.mockFieldOnBean(productController, ProductService.class);
         doReturn(new Product()).when(productServiceMock).saveProducts(Mockito.any(Product.class));
         Response response = given().contentType("application/json").when().body(product).post("/api/product");
@@ -60,6 +60,13 @@ public class ProductControllerTest {
     @Test
     public void testDeleteProductById() {
         Response response = given().when().pathParams("uid", "uid").delete("/api/product/{uid}");
+        response.then().statusCode(200);
+    }
+    @Test
+    public void testGetProductByRetailer() {
+        ProductService productServiceMock = SpringBeanMockUtil.mockFieldOnBean(productController, ProductService.class);
+        doReturn(List.of(new Product())).when(productServiceMock).getProductsByRetailer("uid");
+        Response response = given().when().pathParams("uid", "uid").get("/api/product/retailer/{uid}");
         response.then().statusCode(200);
     }
 }

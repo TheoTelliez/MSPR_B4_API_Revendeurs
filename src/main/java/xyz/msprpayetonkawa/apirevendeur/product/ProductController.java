@@ -30,6 +30,13 @@ public class ProductController {
         return ResponseEntity.ok(toReturn);
     }
 
+    @GetMapping("/retailer/{uid}")
+    public ResponseEntity<List<Product>> getProductsByRetailerUid(@PathVariable("uid") String uid) {
+        List<Product> toReturn = productService.getProductsByRetailer(uid);
+        return ResponseEntity.ok(toReturn);
+    }
+
+
     @PostMapping()
     public ResponseEntity<Product> addProduct(@RequestBody Product product){
         Product toReturn = productService.saveProducts(product);

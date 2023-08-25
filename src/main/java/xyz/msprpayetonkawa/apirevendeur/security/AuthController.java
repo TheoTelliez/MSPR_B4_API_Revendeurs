@@ -2,8 +2,6 @@ package xyz.msprpayetonkawa.apirevendeur.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,14 +19,9 @@ import xyz.msprpayetonkawa.apirevendeur.security.payload.request.LoginRequest;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.SignupRequest;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.MessageResponse;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.Token;
-import xyz.msprpayetonkawa.apirevendeur.security.payload.response.UserInfoResponse;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")

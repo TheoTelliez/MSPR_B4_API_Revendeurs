@@ -1,7 +1,6 @@
 package xyz.msprpayetonkawa.apirevendeur.product;
 
 import jakarta.transaction.Transactional;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,9 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public List<Product> getProductsByRetailer(String uid){
+        return productRepository.findProductsByRetailerUid(uid);
+    }
 
 
 }

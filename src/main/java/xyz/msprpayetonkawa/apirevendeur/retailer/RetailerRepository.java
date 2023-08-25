@@ -7,6 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface RetailerRepository extends JpaRepository<Retailer,Long> {
-    Retailer findByUid(String uid);
+    Optional<Retailer> findByUid(String uid);
     Optional<Retailer> findByEmail(String email);
 }
