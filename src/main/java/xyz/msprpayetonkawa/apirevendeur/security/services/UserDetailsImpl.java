@@ -40,7 +40,6 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(Retailer retailer) {
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(retailer.getRole()));
-//        GrantedAuthority authorities = new SimpleGrantedAuthority(retailer.getRole());
 
         return new UserDetailsImpl(
                 retailer.getId(),
