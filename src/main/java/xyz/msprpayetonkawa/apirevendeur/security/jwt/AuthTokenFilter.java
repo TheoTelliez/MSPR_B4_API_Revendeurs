@@ -23,12 +23,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+    private static final Logger loggerMessage = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        if (request.getRequestURI().startsWith("/api/auth/")) {
+        if (request.getRequestURI().startsWith("/api/auth/") || request.getRequestURI().startsWith("/api/docs")) {
             filterChain.doFilter(request, response);
         } else {
             try {
@@ -48,7 +48,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 }
             } catch (Exception e) {
-                logger.error("Cannot set user authentication: {}", e);
+                loggerMessage.error("Cannot set user authentication: {}", e);
             }
         }
     }

@@ -48,7 +48,6 @@ public class ProductServiceTest {
         assertEquals(products,result);
     }
 
-
     @Test
     public void testFindProductByUidThatExists(){
         String uid = "uid-key";
