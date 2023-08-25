@@ -8,6 +8,7 @@ import xyz.msprpayetonkawa.apirevendeur.order.Order;
 import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductRepository;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
+import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +22,7 @@ public class OrderServiceTest {
     @Before
     public void setUp(){
         Customer customer1 = new Customer(1L,"customer-uid-key","Last Name","First Name","first.last@email.com","Company",true);
-        Product product1 = new Product(1L,"product-uid-key","Name","Description",11.11f,1);
+        Product product1 = new Product(1L,"product-uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
         Order order = new Order();
         order.setUid("order");
         order.setId(1L);

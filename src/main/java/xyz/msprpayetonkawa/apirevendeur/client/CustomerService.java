@@ -3,6 +3,7 @@ package xyz.msprpayetonkawa.apirevendeur.client;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +21,6 @@ public class CustomerService {
 
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public Customer saveCustomer(Customer customer) {
-        customer.setUid(String.valueOf(UUID.randomUUID()));
-        return customerRepository.save(customer);
     }
 
 }

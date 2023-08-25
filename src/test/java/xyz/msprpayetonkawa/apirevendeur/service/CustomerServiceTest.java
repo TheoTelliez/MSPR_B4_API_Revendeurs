@@ -77,16 +77,4 @@ public class CustomerServiceTest {
         Customer result = customerService.getCustomerById(uid);
         assertNull(result);
     }
-
-    @Test
-    public void testSaveCustomer(){
-        Customer customer3 = new Customer(3L,"new-uid-key","New Last Name","New First Name","newfirst.newlast@email.com","Other Company",false);
-
-        Mockito.when(customerRepository.save(any(Customer.class))).thenReturn(customer3);
-
-        Customer result = customerService.saveCustomer(customer3);
-
-        assertNotNull(result);
-        assertEquals(customer3,result);
-    }
 }

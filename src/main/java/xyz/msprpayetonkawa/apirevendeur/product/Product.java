@@ -1,11 +1,10 @@
 package xyz.msprpayetonkawa.apirevendeur.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.*;
+import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 
 @Getter
 @Setter
@@ -24,7 +23,11 @@ public class Product {
     private String name;
     private String description;
     private Float price;
+    @ManyToOne
+    @JsonIgnoreProperties("products")
+    private Retailer retailer;
     private Integer stock;
+    private String image;
 
     public Product(String name, String description, Float price, Integer stock) {
         this.name = name;
