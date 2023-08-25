@@ -27,8 +27,8 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-    private final Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
-    private final Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,new Retailer(), 2, "image");
+    private final Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image", "noir");
+    private final Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,new Retailer(), 2, "image", "noir");
     private final List<Product> products = Arrays.asList(product1, product2);
 
     @InjectMocks
@@ -37,7 +37,6 @@ public class ProductServiceTest {
     @Before
     public void setUp(){
         List<Product> products = Arrays.asList(product1, product2);
-
 
         Mockito.when(productRepository.findAll()).thenReturn(products);
         Mockito.when(productRepository.findByUid("uid-key")).thenReturn(product1);
@@ -53,8 +52,8 @@ public class ProductServiceTest {
 
     @Test
     public void testEqualsAndHash(){
-        Product product = new Product(1L,"uid-key","Name","Description",11.11f, new Retailer(), 0, "image");
-        Product productCopy = new Product(1L,"uid-key","Name","Description",11.11f, new Retailer(), 0, "image");
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f, new Retailer(), 0, "image", "noir");
+        Product productCopy = new Product(1L,"uid-key","Name","Description",11.11f, new Retailer(), 0, "image", "noir");
         assertEquals(product,productCopy);
         assertEquals(product.hashCode(), productCopy.hashCode());
         assertEquals(product.toString(), productCopy.toString());
@@ -62,8 +61,8 @@ public class ProductServiceTest {
 
     @Test
     public void testNotEqualsAndNotHash(){
-        Product product = new Product(1L,"uid-key","Name","Description",11.11f, new Retailer(), 0, "image");
-        Product otherProduct = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f, new Retailer(), 0, "image");
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f, new Retailer(), 0, "image", "noir");
+        Product otherProduct = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f, new Retailer(), 0, "image", "noir");
         assertNotEquals(product,otherProduct);
         assertNotEquals(product.hashCode(), otherProduct.hashCode());
         assertNotEquals(product.toString(), otherProduct.toString());
@@ -101,7 +100,7 @@ public class ProductServiceTest {
 
         String uid = "uid-key-to-delete";
 
-        Product productToDelete = new Product(4L,uid,"Deleted","Deleted",99.99f, new Retailer(), 0, "image");
+        Product productToDelete = new Product(4L,uid,"Deleted","Deleted",99.99f, new Retailer(), 0, "image", "noir");
 
         Mockito.when(productRepository.findByUid(uid)).thenReturn(productToDelete);
 

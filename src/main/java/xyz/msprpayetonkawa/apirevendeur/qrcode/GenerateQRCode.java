@@ -27,7 +27,7 @@ public class GenerateQRCode {
     @Autowired
     EmailServiceImpl emailService;
 
-    public void createQRCode(String token, String username, String email) throws WriterException, IOException, MessagingException {
+    public void createQRCode(String token, String username, String email) throws WriterException, IOException {
         String qrcodeFolderPath = "src/main/resources/qrcodes/";
         String filePath = qrcodeFolderPath + File.separator + username +".png";
         int size = 800;

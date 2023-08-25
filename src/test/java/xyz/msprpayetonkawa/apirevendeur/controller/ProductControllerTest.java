@@ -50,7 +50,7 @@ public class ProductControllerTest {
 
     @Test
     public void testAddProduct() {
-        Product product = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image", "noir");
         ProductService productServiceMock = SpringBeanMockUtil.mockFieldOnBean(productController, ProductService.class);
         doReturn(new Product()).when(productServiceMock).saveProducts(Mockito.any(Product.class));
         Response response = given().contentType("application/json").when().body(product).post("/api/product");
