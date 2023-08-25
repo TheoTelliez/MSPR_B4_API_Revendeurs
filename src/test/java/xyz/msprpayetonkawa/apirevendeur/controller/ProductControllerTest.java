@@ -6,11 +6,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import xyz.msprpayetonkawa.apirevendeur.WebSecurityConfig;
 import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductController;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
+import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 import xyz.msprpayetonkawa.apirevendeur.tools.SpringBeanMockUtil;
 
 import java.util.List;
@@ -21,6 +25,8 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ActiveProfiles("test")
+@Import(WebSecurityConfig.class)
 public class ProductControllerTest {
     @Autowired
     ProductController productController;
@@ -44,7 +50,7 @@ public class ProductControllerTest {
 
     @Test
     public void testAddProduct() {
-        Product product = new Product(1L,"uid-key","Name","Description",11.11f,1);
+        Product product = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
         ProductService productServiceMock = SpringBeanMockUtil.mockFieldOnBean(productController, ProductService.class);
         doReturn(new Product()).when(productServiceMock).saveProducts(Mockito.any(Product.class));
         Response response = given().contentType("application/json").when().body(product).post("/api/product");

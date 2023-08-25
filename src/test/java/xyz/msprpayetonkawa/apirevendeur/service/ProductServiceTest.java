@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductRepository;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
+import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,8 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-    private final Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,1);
-    private final Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,2);
+    private final Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image");
+    private final Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,new Retailer(), 2, "image");
     private final List<Product> products = Arrays.asList(product1, product2);
 
     @InjectMocks

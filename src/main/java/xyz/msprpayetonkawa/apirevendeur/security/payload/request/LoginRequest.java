@@ -12,4 +12,7 @@ public class LoginRequest {
 
 	private String password;
 
+	public LoginRequest(String username) {
+		this.username = username;
+	}
 }

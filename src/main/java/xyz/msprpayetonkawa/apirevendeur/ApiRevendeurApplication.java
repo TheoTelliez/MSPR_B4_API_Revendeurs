@@ -13,5 +13,4 @@ public class ApiRevendeurApplication {
 		SpringApplication.run(ApiRevendeurApplication.class, args);
 	}
 
-
 }
