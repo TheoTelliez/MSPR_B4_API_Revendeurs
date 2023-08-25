@@ -61,7 +61,7 @@ public class AuthController {
 
         String jwtToken = jwtUtils.generateToken(userDetails.getUsername(), userDetails.getEmail());
 
-//        generateQRCode.createQRCode(jwtToken, userDetails.getUsername(), userDetails.getEmail());
+        generateQRCode.createQRCode(jwtToken, userDetails.getUsername(), userDetails.getEmail());
 
         return ResponseEntity.ok(new AuthToken(jwtToken));
     }
