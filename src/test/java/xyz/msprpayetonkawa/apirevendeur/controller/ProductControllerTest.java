@@ -20,7 +20,7 @@ import xyz.msprpayetonkawa.apirevendeur.tools.SpringBeanMockUtil;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext

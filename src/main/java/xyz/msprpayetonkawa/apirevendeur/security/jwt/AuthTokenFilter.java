@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -17,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsServiceImpl;
 
 import java.io.IOException;
-import java.util.Collections;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
@@ -26,7 +23,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+    private static final Logger loggerMessage = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -51,7 +48,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 }
             } catch (Exception e) {
-                logger.error("Cannot set user authentication: {}", e);
+                loggerMessage.error("Cannot set user authentication: {}", e);
             }
         }
     }

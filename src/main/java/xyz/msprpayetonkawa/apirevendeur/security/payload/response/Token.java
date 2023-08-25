@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Token {
-    private String Token;
+    private String token;
 }

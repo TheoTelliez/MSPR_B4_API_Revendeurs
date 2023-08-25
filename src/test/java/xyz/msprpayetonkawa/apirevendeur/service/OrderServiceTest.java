@@ -16,10 +16,9 @@ import xyz.msprpayetonkawa.apirevendeur.order.OrderRepository;
 import xyz.msprpayetonkawa.apirevendeur.order.OrderService;
 import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductRepository;
-import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
-import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 import xyz.msprpayetonkawa.apirevendeur.relations.OrderProduct;
 import xyz.msprpayetonkawa.apirevendeur.relations.OrderProductKey;
+import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

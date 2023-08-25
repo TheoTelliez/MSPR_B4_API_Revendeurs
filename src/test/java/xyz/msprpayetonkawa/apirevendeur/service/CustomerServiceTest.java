@@ -12,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.msprpayetonkawa.apirevendeur.client.Customer;
 import xyz.msprpayetonkawa.apirevendeur.client.CustomerRepository;
 import xyz.msprpayetonkawa.apirevendeur.client.CustomerService;
-import xyz.msprpayetonkawa.apirevendeur.product.Product;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
