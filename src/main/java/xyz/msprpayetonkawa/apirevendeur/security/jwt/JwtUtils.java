@@ -40,7 +40,7 @@ public class JwtUtils {
                 .parseClaimsJws(token).getBody().get("role", String.class);
     }
 
-    private Key key() {
+    public Key key() {
         StringBuilder reverse = new StringBuilder(jwtSecret).reverse();
         String jwtKey = jwtSecret + reverse + jwtSecret + reverse;
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtKey));
@@ -48,7 +48,7 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
+            Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(authToken);
             return true;
         } catch (MalformedJwtException e) {
             loggerMessage.error("Invalid JWT token: {}", e.getMessage());

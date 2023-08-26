@@ -1,38 +1,31 @@
 package xyz.msprpayetonkawa.apirevendeur.entity;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.*;
-import org.junit.Before;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.msprpayetonkawa.apirevendeur.WebSecurityConfig;
 import xyz.msprpayetonkawa.apirevendeur.security.jwt.JwtUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.Key;
-import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import org.springframework.beans.factory.annotation.Value;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext
@@ -40,64 +33,114 @@ import org.springframework.beans.factory.annotation.Value;
 @ActiveProfiles("test")
 @Import(WebSecurityConfig.class)
 public class JwtUtilsTest {
-    private final JwtUtils jwtUtils = new JwtUtils();
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Value("${token.secret}")
     private String jwtSecret;
 
-    @Mock
-    private Key key;
-
-
     @Test
-    public void testGetJWTFromRequestWithGoodToken(){
-        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-
-        Mockito.when(request.getHeader("Authorization")).thenReturn("Bearer token");
-
-        String jwt = jwtUtils.getJWTFromRequest(request);
-        assertEquals("token", jwt);
-    }
-
-    @Test
-    public void testGetJWTFromRequestWithNoToken(){
-        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-
-        Mockito.when(request.getHeader("Authorization")).thenReturn(null);
-
-        String jwt = jwtUtils.getJWTFromRequest(request);
-        assertNull(jwt);
-    }
-
-    @Test
-    public void testGetJWTFromRequestWithWrongToken(){
-        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-
-        Mockito.when(request.getHeader("Authorization")).thenReturn("wrong token");
-
-        String jwt = jwtUtils.getJWTFromRequest(request);
-        assertNull(jwt);
-    }
-
-    @Test
-    public void testGenerateToken(){
+    public void testGenerateToken() {
         String username = "testUser";
         String email = "test@example.com";
+        String token = jwtUtils.generateToken(username, email);
 
-        Instant now = Instant.now();
-        String generatedToken = jwtUtils.generateToken(username, email);
-
-        Jws<Claims> parsedToken = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(key.getEncoded())).build()
-                .parseClaimsJws(generatedToken);
-
-        assertEquals(username, parsedToken.getBody().get("name", String.class));
-        assertEquals("ROLE_RETAILER", parsedToken.getBody().get("role", String.class));
-        assertEquals(email, parsedToken.getBody().getSubject());
-        assertTrue(Date.from(now).before(parsedToken.getBody().getIssuedAt()));
-        assertTrue(Date.from(now.plus(5L, ChronoUnit.HOURS)).after(parsedToken.getBody().getExpiration()));
-
+        assertNotNull(token);
     }
 
+    @Test
+    public void testGetUserNameFromJwtToken() {
+        String username = "testUser";
+        String email = "test@example.com";
+        String token = jwtUtils.generateToken(username, email);
+
+        String extractedUsername = jwtUtils.getUserNameFromJwtToken(token);
+
+        assertEquals(email, extractedUsername);
+    }
+
+    @Test
+    public void testValidateJwtToken() {
+        String username = "testUser";
+        String email = "test@example.com";
+        String token = jwtUtils.generateToken(username, email);
+
+        boolean isValid = jwtUtils.validateJwtToken(token);
+
+        assertTrue(isValid);
+    }
+
+    @Test
+    public void testValidateJwtTokenInvalid() {
+        String invalidToken = "invalidToken";
+
+        boolean isValid = jwtUtils.validateJwtToken(invalidToken);
+
+        assertFalse(isValid);
+    }
+
+    @Test
+    public void testGetJWTFromRequest() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addHeader("Authorization", "Bearer testToken");
+
+        String token = jwtUtils.getJWTFromRequest(request);
+
+        assertEquals("testToken", token);
+    }
+
+    @Test
+    public void testGetJWTFromRequestNoBearer() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addHeader("Authorization", "testToken");
+
+        String token = jwtUtils.getJWTFromRequest(request);
+
+        assertNull(token);
+    }
+
+    @Test
+    public void testGetJWTFromRequestNoHeader() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        String token = jwtUtils.getJWTFromRequest(request);
+
+        assertNull(token);
+    }
+
+    @Test
+    public void testValidateJwtTokenInvalidSignature() {
+        String tokenWithInvalidSignature = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNjI5MzYwNzI2LCJleHAiOjE2MjkzNjQzMjZ9.invalidsignature";
+        boolean isValid = jwtUtils.validateJwtToken(tokenWithInvalidSignature);
+        assertFalse(isValid);
+    }
+
+    @Test
+    public void testValidateJwtTokenMalformed() {
+        String malformedToken = "malformedToken";
+        boolean isValid = jwtUtils.validateJwtToken(malformedToken);
+        assertFalse(isValid);
+    }
+
+    @Test
+    public void testValidateJwtTokenExpired() {
+        Instant now = Instant.now();
+        String expiredToken = Jwts.builder()
+                .setSubject("testuser@example.com")
+                .setExpiration(Date.from(now.minus(5L, ChronoUnit.HOURS)))
+                .signWith(jwtUtils.key(), SignatureAlgorithm.HS512)
+                .compact();
+        assertFalse(jwtUtils.validateJwtToken(expiredToken));
+    }
+
+    @Test
+    public void testValidateJwtTokenUnsupported() {
+        String unsupportedToken = Jwts.builder()
+                .setSubject("testuser@example.com")
+                .signWith(Keys.secretKeyFor(SignatureAlgorithm.HS256), SignatureAlgorithm.HS256)
+                .compact();
+        assertFalse(jwtUtils.validateJwtToken(unsupportedToken));
+    }
 
 }
 

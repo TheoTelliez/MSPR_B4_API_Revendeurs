@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.UserInfoResponse;
-import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 
 import java.util.Arrays;
 import java.util.List;

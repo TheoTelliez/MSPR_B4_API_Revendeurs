@@ -1,7 +1,5 @@
 package xyz.msprpayetonkawa.apirevendeur.service;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerRepository;
-import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerService;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsServiceImpl;
 

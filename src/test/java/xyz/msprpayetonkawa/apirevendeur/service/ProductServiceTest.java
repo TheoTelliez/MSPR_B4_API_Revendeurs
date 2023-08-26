@@ -13,6 +13,7 @@ import xyz.msprpayetonkawa.apirevendeur.product.Product;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductRepository;
 import xyz.msprpayetonkawa.apirevendeur.product.ProductService;
 import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
+import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,9 @@ import static org.mockito.ArgumentMatchers.any;
 public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
+
+    @Mock
+    private RetailerRepository retailerRepository;
 
     private final Product product1 = new Product(1L,"uid-key","Name","Description",11.11f,new Retailer(), 1, "image","bleu");
     private final Product product2 = new Product(2L,"other-uid-key","Other-Name","Other-Description",22.22f,new Retailer(), 2, "image","noir");
@@ -67,6 +71,8 @@ public class ProductServiceTest {
     @Test
     public void testSaveProduct(){
         Product product3 = new Product("New-Name","New-Description",33.33f,3);
+
+        product3.setRetailer(retailer1);
 
         Mockito.when(productRepository.save(any(Product.class))).thenReturn(product3);
 
