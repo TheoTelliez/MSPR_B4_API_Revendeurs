@@ -10,6 +10,7 @@ import jakarta.servlet.http.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,14 +26,13 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import org.springframework.beans.factory.annotation.Value;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext
@@ -41,6 +41,13 @@ import static org.mockito.ArgumentMatchers.any;
 @Import(WebSecurityConfig.class)
 public class JwtUtilsTest {
     private final JwtUtils jwtUtils = new JwtUtils();
+
+    @Value("${token.secret}")
+    private String jwtSecret;
+
+    @Mock
+    private Key key;
+
 
     @Test
     public void testGetJWTFromRequestWithGoodToken(){
@@ -70,6 +77,25 @@ public class JwtUtilsTest {
 
         String jwt = jwtUtils.getJWTFromRequest(request);
         assertNull(jwt);
+    }
+
+    @Test
+    public void testGenerateToken(){
+        String username = "testUser";
+        String email = "test@example.com";
+
+        Instant now = Instant.now();
+        String generatedToken = jwtUtils.generateToken(username, email);
+
+        Jws<Claims> parsedToken = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(key.getEncoded())).build()
+                .parseClaimsJws(generatedToken);
+
+        assertEquals(username, parsedToken.getBody().get("name", String.class));
+        assertEquals("ROLE_RETAILER", parsedToken.getBody().get("role", String.class));
+        assertEquals(email, parsedToken.getBody().getSubject());
+        assertTrue(Date.from(now).before(parsedToken.getBody().getIssuedAt()));
+        assertTrue(Date.from(now.plus(5L, ChronoUnit.HOURS)).after(parsedToken.getBody().getExpiration()));
+
     }
 
 
