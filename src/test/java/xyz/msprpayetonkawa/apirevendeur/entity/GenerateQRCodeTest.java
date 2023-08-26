@@ -62,8 +62,8 @@ public class GenerateQRCodeTest {
 
         generateQRCode.createQRCode(token, username, email);
 
-        assertTrue(new File("qrcodes/testUsername.png").exists());
-        Files.delete(Path.of("qrcodes/" + username + ".png"));
+        assertTrue(new File("/qrcodes/testUsername.png").exists());
+        Files.delete(Path.of("/qrcodes/" + username + ".png"));
     }
 
     @Test
@@ -74,8 +74,8 @@ public class GenerateQRCodeTest {
 
         generateQRCode.createQRCode(token, username, email);
 
-        assertTrue(new File("qrcodes/"+username+".png").exists());
-        Files.delete(Path.of("qrcodes/" + username + ".png"));
+        assertTrue(new File("/qrcodes/"+username+".png").exists());
+        Files.delete(Path.of("/qrcodes/" + username + ".png"));
     }
 
 
