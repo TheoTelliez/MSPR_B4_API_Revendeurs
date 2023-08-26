@@ -1,7 +1,6 @@
 package xyz.msprpayetonkawa.apirevendeur.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import xyz.msprpayetonkawa.apirevendeur.security.jwt.AuthEntryPointJwt;
 import xyz.msprpayetonkawa.apirevendeur.security.jwt.AuthTokenFilter;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsServiceImpl;
 
@@ -60,6 +58,8 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/docs").permitAll()
+                                .requestMatchers("/api/docs/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 

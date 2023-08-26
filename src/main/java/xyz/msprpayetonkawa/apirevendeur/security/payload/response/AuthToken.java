@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Token {
-    private String Token;
+public class AuthToken {
+    private String token;
 }

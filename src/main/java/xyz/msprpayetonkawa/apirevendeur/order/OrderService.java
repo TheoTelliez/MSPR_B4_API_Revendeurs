@@ -1,7 +1,6 @@
 package xyz.msprpayetonkawa.apirevendeur.order;
 
 import jakarta.transaction.Transactional;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class RetailerService {
@@ -20,7 +20,7 @@ public class RetailerService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Retailer getRetailerByUid(String uid) {
+    public Optional<Retailer> getRetailerByUid(String uid) {
         return retailerRepository.findByUid(uid);
     }
 
@@ -28,10 +28,8 @@ public class RetailerService {
         return retailerRepository.findByEmail(email);
     }
 
-    public Retailer addRetailer(Retailer retailer) {
-        retailer.setUid(UUID.randomUUID().toString());
-        retailer.setRole("ROLE_RETAILER");
-        retailer.setPassword(passwordEncoder.encode(defaultPassword));
-        return retailerRepository.save(retailer);
+    public List<Retailer> getRetailers() {
+        return retailerRepository.findAll();
     }
+
 }

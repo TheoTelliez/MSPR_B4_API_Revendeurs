@@ -28,6 +28,7 @@ public class Product {
     private Retailer retailer;
     private Integer stock;
     private String image;
+    private String couleur;
 
     public Product(String name, String description, Float price, Integer stock) {
         this.name = name;

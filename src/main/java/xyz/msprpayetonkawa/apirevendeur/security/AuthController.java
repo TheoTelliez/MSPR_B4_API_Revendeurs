@@ -1,9 +1,8 @@
 package xyz.msprpayetonkawa.apirevendeur.security;
 
+import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,21 +13,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.msprpayetonkawa.apirevendeur.qrcode.GenerateQRCode;
 import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
 import xyz.msprpayetonkawa.apirevendeur.retailer.RetailerRepository;
 import xyz.msprpayetonkawa.apirevendeur.security.jwt.JwtUtils;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.LoginRequest;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.request.SignupRequest;
+import xyz.msprpayetonkawa.apirevendeur.security.payload.response.AuthToken;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.MessageResponse;
-import xyz.msprpayetonkawa.apirevendeur.security.payload.response.Token;
-import xyz.msprpayetonkawa.apirevendeur.security.payload.response.UserInfoResponse;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,11 +43,14 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    GenerateQRCode generateQRCode;
+
     @Value("${customer.password}")
     private String defaultPassword;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<AuthToken> authenticateUser(@RequestBody LoginRequest loginRequest) throws IOException, WriterException, MessagingException {
         loginRequest.setPassword(defaultPassword);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -60,11 +61,13 @@ public class AuthController {
 
         String jwtToken = jwtUtils.generateToken(userDetails.getUsername(), userDetails.getEmail());
 
-        return ResponseEntity.ok(new Token(jwtToken));
+        generateQRCode.createQRCode(jwtToken, userDetails.getUsername(), userDetails.getEmail());
+
+        return ResponseEntity.ok(new AuthToken(jwtToken));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signUpRequest) {
         if (retailerRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
         }
