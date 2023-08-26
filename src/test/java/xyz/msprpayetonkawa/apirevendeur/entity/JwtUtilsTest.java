@@ -3,36 +3,27 @@ package xyz.msprpayetonkawa.apirevendeur.entity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import xyz.msprpayetonkawa.apirevendeur.WebSecurityConfig;
 import xyz.msprpayetonkawa.apirevendeur.security.jwt.JwtUtils;
 
-import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@ActiveProfiles("test")
-@Import(WebSecurityConfig.class)
+@SpringBootTest
 public class JwtUtilsTest {
+
     @Autowired
     private JwtUtils jwtUtils;
 
@@ -142,5 +133,14 @@ public class JwtUtilsTest {
         assertFalse(jwtUtils.validateJwtToken(unsupportedToken));
     }
 
-}
+    @Test
+    public void testValidateJwtTokenEmptyClaims() {
+        String tokenWithEmptyClaims = Jwts.builder()
+                .setHeaderParam("alg", "HS512")
+                .setClaims(new HashMap<>())  // set empty claims
+                .signWith(jwtUtils.key())
+                .compact();
+        assertFalse(jwtUtils.validateJwtToken(tokenWithEmptyClaims));
+    }
 
+}

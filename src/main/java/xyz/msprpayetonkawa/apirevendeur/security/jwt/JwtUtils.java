@@ -35,11 +35,6 @@ public class JwtUtils {
                 .parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String getRoleFromJwtToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(key()).build()
-                .parseClaimsJws(token).getBody().get("role", String.class);
-    }
-
     public Key key() {
         StringBuilder reverse = new StringBuilder(jwtSecret).reverse();
         String jwtKey = jwtSecret + reverse + jwtSecret + reverse;
@@ -58,6 +53,8 @@ public class JwtUtils {
             loggerMessage.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
             loggerMessage.error("JWT claims string is empty: {}", e.getMessage());
+        } catch (SignatureException e) {
+            loggerMessage.error("Invalid JWT signature: {}", e.getMessage());
         }
 
         return false;
