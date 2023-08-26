@@ -8,7 +8,10 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -17,8 +20,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,14 +29,10 @@ import xyz.msprpayetonkawa.apirevendeur.security.jwt.JwtUtils;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsServiceImpl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -77,34 +74,27 @@ public class AuthTokenFilterTest {
 
     @Test
     public void testDoFilterInternal_WithValidJwt() throws ServletException, IOException {
-        // Mocking behavior of JwtUtils and userDetailsService
         Mockito.when(request.getRequestURI()).thenReturn("/api/some-endpoint");
         Mockito.when(jwtUtils.getJWTFromRequest(request)).thenReturn("validJwt");
         Mockito.when(jwtUtils.validateJwtToken("validJwt")).thenReturn(true);
         Mockito.when(jwtUtils.getUserNameFromJwtToken("validJwt")).thenReturn("username");
 
-        // Create a UserDetails object
         UserDetails userDetails = new User("username", "password", Collections.emptyList());
 
-        // Create an expected authentication token
         Authentication expectedAuthentication =
                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         Mockito.when(userDetailsService.loadUserByUsername("username")).thenReturn(userDetails);
         Mockito.when(authenticationToken.getDetails()).thenReturn(null);
 
-        // Execute the filter
         authTokenFilter.doFilter(request, response, filterChain);
 
-        // Get the actual authentication from SecurityContextHolder
         Authentication actualAuthentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Check if authentication was set in the SecurityContextHolder
         assertEquals(expectedAuthentication.getPrincipal(), actualAuthentication.getPrincipal());
         assertEquals(expectedAuthentication.getAuthorities(), actualAuthentication.getAuthorities());
         assertEquals(expectedAuthentication.isAuthenticated(), actualAuthentication.isAuthenticated());
 
-        // Verify that filterChain was called
         Mockito.verify(filterChain, times(1)).doFilter(request, response);
     }
 

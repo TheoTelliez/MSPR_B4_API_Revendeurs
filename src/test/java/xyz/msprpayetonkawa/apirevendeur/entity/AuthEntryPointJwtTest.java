@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -24,16 +25,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.msprpayetonkawa.apirevendeur.WebSecurityConfig;
 import xyz.msprpayetonkawa.apirevendeur.security.jwt.AuthEntryPointJwt;
-import org.slf4j.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.mockito.Mockito.times;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext
@@ -84,7 +80,7 @@ public class AuthEntryPointJwtTest {
         Mockito.when(response.getOutputStream()).thenReturn(servletOutputStream);
 
         authEntryPointJwt.commence(request, response, authException);
-        
+
         Mockito.verify(response).setContentType(MediaType.APPLICATION_JSON_VALUE);
         Mockito.verify(response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 

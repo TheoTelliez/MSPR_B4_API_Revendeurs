@@ -1,34 +1,24 @@
 package xyz.msprpayetonkawa.apirevendeur.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import xyz.msprpayetonkawa.apirevendeur.WebSecurityConfig;
 import xyz.msprpayetonkawa.apirevendeur.qrcode.GenerateQRCode;
 import xyz.msprpayetonkawa.apirevendeur.retailer.Retailer;
@@ -41,14 +31,11 @@ import xyz.msprpayetonkawa.apirevendeur.security.payload.response.AuthToken;
 import xyz.msprpayetonkawa.apirevendeur.security.payload.response.MessageResponse;
 import xyz.msprpayetonkawa.apirevendeur.security.services.UserDetailsImpl;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -112,14 +99,12 @@ public class AuthControllerTest {
 
     @Test
     public void testRegisterUser() {
-        // Set up your test data
         SignupRequest signUpRequest = new SignupRequest();
         signUpRequest.setEmail("test@example.com");
         signUpRequest.setName("Test User");
 
         Mockito.when(retailerRepository.findByEmail(signUpRequest.getEmail())).thenReturn(Optional.empty());
 
-        // Mock the behavior of the PasswordEncoder
         Mockito.when(encoder.encode("encodedPassword")).thenReturn("encodedPassword");
 
         ResponseEntity<MessageResponse> response = authController.registerUser(signUpRequest);
@@ -130,10 +115,6 @@ public class AuthControllerTest {
 
         Mockito.verify(retailerRepository).findByEmail(signUpRequest.getEmail());
         Mockito.verify(retailerRepository).save(any(Retailer.class));
-
-        // Verify that the PasswordEncoder was called with the expected argument
-
-        // ...
     }
 
 }

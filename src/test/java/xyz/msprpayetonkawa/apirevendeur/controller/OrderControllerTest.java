@@ -55,10 +55,4 @@ public class OrderControllerTest {
         Response response = given().contentType("application/json").when().body(order).post("/api/order");
         response.then().statusCode(201);
     }
-
-    /*@Test
-    public void testDeleteOrderById() {
-        Response response = given().when().pathParams("uid", "uid").delete("/api/order/{uid}");
-        response.then().statusCode(200);
-    }*/
 }
